@@ -1,50 +1,52 @@
 ﻿#include <iostream>
 
-bool if_prime(int t) {
-	int i = 2;
-	int k = 0;
-	while (i < t) {
-		if (t % i == 0) k++;
-		i++;
-	}
-	if (k == 0) return true;
-	return false;
+int max(int a, int b) {
+	if (a > b) return a;
+	return b;
 }
 
-void delete_annoying_primes(int d, int arr[257814]) {
+void build_ziggurat(int n) {
 	int i = 0;
 	int j;
-	int k;
-	while (i < d) {
-		if (!if_prime(arr[i]) or arr[i] == 0) {
-			std::cout << arr[i] << " ";
-			i++;
-			continue;
-		}
+	while (i < n - n/2) {
 		j = 0;
-		k = 0;
-		while (j < d) {
-			if (arr[i] != arr[j]) k++;
-			if (i == j) k++;
+		int k = 1;
+		while (j < n) {
+			std::cout << k << " ";
+			if (j < max(n / 2, n - n / 2) && k < i + 1) {
+				k++;
+			}
+			else if ((j >= max(n / 2, n - n / 2) && k >= n - j)|| (k == n - n/2 && n % 2 == 1)) {
+				k--;
+			}
 			j++;
 		}
-		if (k == d) {
-
-			std::cout << arr[i] << " ";
-		}
+		std::cout << "\n";
 		i++;
 	}
+	i = n/2 - 1;
+	while (i >= 0) {
+		j = 0;
+		int k = 1;
+		while (j < n) {
+			std::cout << k << " ";
+			if (j < max(n / 2, n - n / 2) && k < i + 1) {
+				k++;
+			}
+			else if ((j >= max(n / 2, n - n / 2) && k >= n - j) || (k == n - n / 2 && n % 2 == 1)) {
+				k--;
+			}
+			j++;
+		}
+		std::cout << "\n";
+		i--;
+	}
+
 }
 
 int main() {
-	int f = 0;
-	std::cin >> f;
-	int a[257814];
-	int i = 0;
-	while (i < f) {
-		std::cin >> a[i];
-		i++;
-	}
-	delete_annoying_primes(f, a);
+	int n;
+	std::cin >> n;
+	build_ziggurat(n);
 	return 0;
 }
