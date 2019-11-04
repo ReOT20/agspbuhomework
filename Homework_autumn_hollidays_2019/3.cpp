@@ -5,14 +5,15 @@ int max(int a, int b) {
 	return b;
 }
 
-void build_ziggurat(int n) {
+int** build_ziggurat(int n, int** Ziggurat) {
 	int i = 0;
 	int j;
+	int count = 0;
 	while (i < n - n / 2) {
 		j = 0;
 		int k = 1;
 		while (j < n) {
-			std::cout << k << " ";
+			Ziggurat[count][j] = k;
 			if (j < max(n / 2, n - n / 2) && k < i + 1) {
 				k++;
 			}
@@ -21,7 +22,7 @@ void build_ziggurat(int n) {
 			}
 			j++;
 		}
-		std::cout << "\n";
+		count++;
 		i++;
 	}
 	i = n / 2 - 1;
@@ -29,7 +30,7 @@ void build_ziggurat(int n) {
 		j = 0;
 		int k = 1;
 		while (j < n) {
-			std::cout << k << " ";
+			Ziggurat[count][j] = k;
 			if (j < max(n / 2, n - n / 2) && k < i + 1) {
 				k++;
 			}
@@ -38,15 +39,33 @@ void build_ziggurat(int n) {
 			}
 			j++;
 		}
-		std::cout << "\n";
+		count++;
 		i--;
 	}
+	return Ziggurat;
 
 }
 
 int main() {
 	int n;
 	std::cin >> n;
-	build_ziggurat(n);
+	int** Ziggurat = new int* [n];
+	int i = 0;
+	while (i < n) {
+		Ziggurat[i] = new int[n];
+		i++;
+	}
+	Ziggurat = build_ziggurat(n, Ziggurat);
+	i = 0;
+	int j;
+	while (i < n) {
+		j = 0;
+		while (j < n) {
+			std::cout << Ziggurat[i][j] << " ";
+			j++;
+		}
+		std::cout << "\n";
+		i++;
+	}
 	return 0;
 }

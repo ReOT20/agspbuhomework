@@ -5,7 +5,7 @@
         "label": "msvc build",
         "type": "shell",
         "command": "cl.exe",
-        "args": ["/EHsc", "/Zi", "/Fe:", "a.exe", "/Homework_autumn_hollidays_2019/3.cpp"],
+        "args": ["/EHsc", "/Zi", "/Fe:", "a.exe", "3.cpp"],
         "group": {
           "kind": "build",
           "isDefault": true

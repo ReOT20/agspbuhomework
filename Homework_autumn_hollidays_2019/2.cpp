@@ -11,13 +11,16 @@ bool if_prime(int t) {
 	return false;
 }
 
-void delete_annoying_primes(int d, int arr[257814]) {
+int* delete_annoying_primes(int d, int* arr) {
 	int i = 0;
 	int j;
 	int k;
+	int count = 1;
+	int* array = new int[d + 1];
 	while (i < d) {
 		if (!if_prime(arr[i]) or arr[i] == 0) {
-			std::cout << arr[i] << " ";
+			array[count] = arr[i];
+			count++;
 			i++;
 			continue;
 		}
@@ -29,22 +32,29 @@ void delete_annoying_primes(int d, int arr[257814]) {
 			j++;
 		}
 		if (k == d) {
-
-			std::cout << arr[i] << " ";
+			array[count] = arr[i];
+			count++;
 		}
 		i++;
 	}
+	array[0] = count;
+	return array;
 }
 
 int main() {
-	int f = 0;
-	std::cin >> f;
-	int a[257814];
+	int n = 0;
+	std::cin >> n;
+	int* Array = new int[n + 1];
 	int i = 0;
-	while (i < f) {
-		std::cin >> a[i];
+	while (i < n) {
+		std::cin >> Array[i];
 		i++;
 	}
-	delete_annoying_primes(f, a);
+	Array = delete_annoying_primes(n, Array);
+	i = 1;
+	while (i < Array[0]) {
+		std::cout << Array[i] << " ";
+		i++;
+	}
 	return 0;
 }

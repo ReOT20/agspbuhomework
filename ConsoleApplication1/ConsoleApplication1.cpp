@@ -1,52 +1,47 @@
 ﻿#include <iostream>
 
-int max(int a, int b) {
-	if (a > b) return a;
-	return b;
+int abs(int x) {
+	if (x < 0) return (x * -1);
+	return x;
 }
 
-void build_ziggurat(int n) {
+int** dig_trench(int** array, int n) {
 	int i = 0;
 	int j;
-	while (i < n - n/2) {
+	int k;
+	while (i < n) {
 		j = 0;
-		int k = 1;
+		k = i * -1;
 		while (j < n) {
-			std::cout << k << " ";
-			if (j < max(n / 2, n - n / 2) && k < i + 1) {
-				k++;
-			}
-			else if ((j >= max(n / 2, n - n / 2) && k >= n - j)|| (k == n - n/2 && n % 2 == 1)) {
-				k--;
-			}
+			array[i][j] = abs(k);
+			k++;
 			j++;
 		}
-		std::cout << "\n";
 		i++;
 	}
-	i = n/2 - 1;
-	while (i >= 0) {
-		j = 0;
-		int k = 1;
-		while (j < n) {
-			std::cout << k << " ";
-			if (j < max(n / 2, n - n / 2) && k < i + 1) {
-				k++;
-			}
-			else if ((j >= max(n / 2, n - n / 2) && k >= n - j) || (k == n - n / 2 && n % 2 == 1)) {
-				k--;
-			}
-			j++;
-		}
-		std::cout << "\n";
-		i--;
-	}
-
+	return array;
 }
 
 int main() {
 	int n;
 	std::cin >> n;
-	build_ziggurat(n);
+	int** Trench = new int* [n];
+	int i = 0;
+	while (i < n) {
+		Trench[i] = new int[n];
+		i++;
+	}
+	Trench = dig_trench(Trench, n);
+	int j;
+	i = 0;
+	while (i < n) {
+		j = 0;
+		while (j < n) {
+			std::cout << Trench[i][j] << " ";
+			j++;
+		}
+		std::cout << "\n";
+		i++;
+	}
 	return 0;
 }
