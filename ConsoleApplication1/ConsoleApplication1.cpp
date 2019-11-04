@@ -1,27 +1,29 @@
 ﻿#include <iostream>
 
-int abs(int x) {
-	if (x < 0) return (x * -1);
-	return x;
-}
-
-int proper_fraction(int n) {
-	int res = n;
-	int i = 2;
-	while (i * i <= n) {
-		if (n % i == 0) {
-			while (n % i == 0) n /= i;
-			res -= res/i;
-		}
+int* cut(int* Array, int a, int b) {
+	int i = a;
+	int* arr = new int[b - a];
+	while (i < b) {
+		arr[i - a] = Array[i];
 		i++;
 	}
-	if (n > 1) return (res - res/n)*2;
-	return res*2;
+	return arr;
+}
+
+int strange_sum(int* arr, int n) {
+	if (n == 1) return arr[0];
+	return strange_sum(cut(arr, 0, n - n / 2), n - n / 2) + strange_sum(cut(arr, n - n / 2, n), n / 2);
 }
 
 int main() {
 	int n;
 	std::cin >> n;
-	std::cout << proper_fraction(abs(n));
+	int* Array = new int[n + 1];
+	int i = 0;
+	while (i < n) {
+		std::cin >> Array[i];
+		i++;
+	}
+	std::cout << strange_sum(Array, n);
 	return 0;
 }
