@@ -1,43 +1,67 @@
 ﻿#include <iostream>
 
-int abs(int x) {
-	if (x < 0) return (x * -1);
-	return x;
-}
-
-int** dig_trench(int** array, int n) {
-	int i = 0;
-	int j;
-	int k;
-	while (i < n) {
-		j = 0;
-		k = i * -1;
-		while (j < n) {
-			array[i][j] = abs(k);
-			k++;
-			j++;
+int** put_snake(int** Snake , int n, int m) {
+	int curX = m - 1;
+	int curY = 0;
+	int direction = 2;
+	int top_border = 0;
+	int left_border = 0;
+	int bottom_border = n - 1;
+	int right_border = m - 1;
+	int i = 1;
+	Snake[curY][curX] = i;
+	while (i < n * m) {
+		if (direction == 2) {
+			curX--;
+			if (curX == left_border) {
+				direction = 3;
+				top_border++;
+				curY++;
+			}
+		} else if (direction == 3) {
+			curY++;
+			if (curY == bottom_border) {
+				direction = 4;
+				left_border++;
+				curX++;
+			}
+		} else if (direction == 4) {
+			curX++;
+			if (curX == right_border) {
+				direction = 1;
+				bottom_border--;
+				curY--;
+			}
+		} else {
+			curY--;
+			if (curY == top_border) {
+				direction = 2;
+				right_border--;
+				curX--;
+			}
 		}
 		i++;
+		Snake[curY][curX] = i;
 	}
-	return array;
+	return Snake;
 }
 
 int main() {
-	int n;
-	std::cin >> n;
-	int** Trench = new int* [n];
+	int n, m;
+	std::cin >> n >> m;
+	int** Snake = new int* [n];
 	int i = 0;
 	while (i < n) {
-		Trench[i] = new int[n];
+		Snake[i] = new int[m];
 		i++;
 	}
-	Trench = dig_trench(Trench, n);
+	Snake = put_snake(Snake, n, m);
 	int j;
 	i = 0;
 	while (i < n) {
 		j = 0;
 		while (j < n) {
-			std::cout << Trench[i][j] << " ";
+			std::cout << Snake[i][j] << "\t";
 			j++;
 		}
 		std::cout << "\n";
