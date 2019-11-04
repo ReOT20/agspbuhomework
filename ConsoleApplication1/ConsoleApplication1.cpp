@@ -1,6 +1,6 @@
 ﻿#include <iostream>
 
-int** put_snake(int** Snake , int n, int m) {
+int** put_snake(int** Snake, int n, int m) {
 	int curX = m - 1;
 	int curY = 0;
 	int direction = 2;
@@ -8,39 +8,38 @@ int** put_snake(int** Snake , int n, int m) {
 	int left_border = 0;
 	int bottom_border = n - 1;
 	int right_border = m - 1;
-	int i = 1;
+	int i = n * m - 1;
 	Snake[curY][curX] = i;
-	while (i < n * m) {
+	while (i > 0) {
 		if (direction == 2) {
 			curX--;
 			if (curX == left_border) {
 				direction = 3;
 				top_border++;
-				curY++;
 			}
-		} else if (direction == 3) {
+		}
+		else if (direction == 3) {
 			curY++;
 			if (curY == bottom_border) {
 				direction = 4;
 				left_border++;
-				curX++;
 			}
-		} else if (direction == 4) {
+		}
+		else if (direction == 4) {
 			curX++;
 			if (curX == right_border) {
 				direction = 1;
 				bottom_border--;
-				curY--;
 			}
-		} else {
+		}
+		else {
 			curY--;
 			if (curY == top_border) {
 				direction = 2;
 				right_border--;
-				curX--;
 			}
 		}
-		i++;
+		i--;
 		Snake[curY][curX] = i;
 	}
 	return Snake;
@@ -60,7 +59,7 @@ int main() {
 	i = 0;
 	while (i < n) {
 		j = 0;
-		while (j < n) {
+		while (j < m) {
 			std::cout << Snake[i][j] << "\t";
 			j++;
 		}
