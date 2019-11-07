@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cstdlib>
+#include <cmath>
 
 unsigned long int sum(unsigned long int* arr) {
 	unsigned long int i = 2;
@@ -12,8 +13,8 @@ unsigned long int sum(unsigned long int* arr) {
 }
 
 unsigned long int crt(unsigned long int n) {
-	unsigned long int i = n;
-	while (i * i * i > n) i--;
+	unsigned long i = long(pow(n, (1.0 / 3)));
+	if ((i + 1) * (i + 1) * (i + 1) <= n) return i + 1;
 	return i;
 }
 
