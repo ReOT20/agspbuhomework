@@ -1,10 +1,5 @@
 #include <iostream>
 
-int max(int a, int b) {
-	if (a > b) return a;
-	return b;
-}
-
 int** build_ziggurat(int n, int** Ziggurat) {
 	int i = 0;
 	int j;
@@ -14,12 +9,8 @@ int** build_ziggurat(int n, int** Ziggurat) {
 		int k = 1;
 		while (j < n) {
 			Ziggurat[count][j] = k;
-			if (j < max(n / 2, n - n / 2) && k < i + 1) {
-				k++;
-			}
-			else if ((j >= max(n / 2, n - n / 2) && k >= n - j) || (k == n - n / 2 && n % 2 == 1)) {
-				k--;
-			}
+			if (j < (n - n / 2) && k < i + 1) k++;
+			else if ((j >= (n - n / 2) && k >= n - j) || (k == n - n / 2 && n % 2 == 1)) k--;
 			j++;
 		}
 		count++;
@@ -31,10 +22,10 @@ int** build_ziggurat(int n, int** Ziggurat) {
 		int k = 1;
 		while (j < n) {
 			Ziggurat[count][j] = k;
-			if (j < max(n / 2, n - n / 2) && k < i + 1) {
+			if (j < (n - n / 2) && k < i + 1) {
 				k++;
 			}
-			else if ((j >= max(n / 2, n - n / 2) && k >= n - j) || (k == n - n / 2 && n % 2 == 1)) {
+			else if ((j >= (n - n / 2) && k >= n - j) || (k == n - n / 2 && n % 2 == 1)) {
 				k--;
 			}
 			j++;
@@ -43,7 +34,6 @@ int** build_ziggurat(int n, int** Ziggurat) {
 		i--;
 	}
 	return Ziggurat;
-
 }
 
 int main() {

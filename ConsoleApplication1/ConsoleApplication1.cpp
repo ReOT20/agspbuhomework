@@ -1,67 +1,61 @@
 ﻿#include <iostream>
-#include <cstdlib>
-#include <cmath>
 
-unsigned long int sum(unsigned long int* arr) {
-	unsigned long int i = 2;
-	unsigned long int s = 0;
-	while (i < 10) {
-		s += arr[i] * arr[i] * arr[i];
+int** build_ziggurat(int n, int** Ziggurat) {
+	int i = 0;
+	int j;
+	int count = 0;
+	while (i < n - n / 2) {
+		j = 0;
+		int k = 1;
+		while (j < n) {
+			Ziggurat[count][j] = k;
+			if (j < (n - n / 2) && k < i + 1) k++;
+			else if ((j >= (n - n / 2) && k >= n - j) || (k == n - n / 2 && n % 2 == 1)) k--;
+			j++;
+		}
+		count++;
 		i++;
 	}
-	return s;
-}
-
-unsigned long int crt(unsigned long int n) {
-	unsigned long i = long(pow(n, (1.0 / 3)));
-	if ((i + 1) * (i + 1) * (i + 1) <= n) return i + 1;
-	return i;
-}
-
-unsigned long int cub(unsigned long int* arr) {
-	if (arr[1] > 10) {
-		if (sum(arr) == arr[12]) {
-			unsigned long int i = 2;
-			unsigned long int s = 0;
-			while (s != arr[12] && i < 10) {
-				s += arr[i] * arr[i] * arr[i];
-				std::cout << arr[i] << " ";
-				i++;
+	i = n / 2 - 1;
+	while (i >= 0) {
+		j = 0;
+		int k = 1;
+		while (j < n) {
+			Ziggurat[count][j] = k;
+			if (j < (n - n / 2) && k < i + 1) {
+				k++;
 			}
-			if (arr[12] == 0) std::cout << 0;
-			exit(0);
+			else if ((j >= (n - n / 2) && k >= n - j) || (k == n - n / 2 && n % 2 == 1)) {
+				k--;
+			}
+			j++;
 		}
+		count++;
+		i--;
 	}
-	else {
-		unsigned long int n = crt(arr[0]);
-		unsigned long int* Array = new unsigned long int[12];
-		while (n >= 0) {
-			if (arr[1] > 10) return 0;
-			Array = arr;
-			Array[arr[1]] = n;
-			Array[0] -= n * n * n;
-			Array[1]++;
-			cub(Array);
-			n--;
-		}
-
-	}
-	return 0;
+	return Ziggurat;
 }
 
 int main() {
-	unsigned long int n;
+	int n;
 	std::cin >> n;
-	unsigned long int* arr = new unsigned long int[12];
-	arr[0] = n;
-	arr[1] = 2;
-	arr[12] = n;
-	unsigned long int i = 2;
-	while (i < 12) {
-		arr[i] = -1;
+	int** Ziggurat = new int* [n];
+	int i = 0;
+	while (i < n) {
+		Ziggurat[i] = new int[n];
 		i++;
 	}
-	cub(arr);
-	std::cout << "Impossible";
+	Ziggurat = build_ziggurat(n, Ziggurat);
+	i = 0;
+	int j;
+	while (i < n) {
+		j = 0;
+		while (j < n) {
+			std::cout << Ziggurat[i][j] << " ";
+			j++;
+		}
+		std::cout << "\n";
+		i++;
+	}
 	return 0;
 }
