@@ -2,9 +2,21 @@
 
 int main() {
 	int y = 38834;
-	while (y > 0) {
-		if (((78487894 - 2021 * y) % 2020) == 0) std::cout << (78487894 - 2021 * y) / 2020<< "\t" << y << "\n";
+	bool check = true;
+	int x;
+	while (check) {
+		if (((78487894 - 2021 * y) % 2020) == 0) {
+			x = (78487894 - 2021 * y) / 2020;
+			check = false;
+		}
 		y -= 10;
+	}
+	y += 10;
+	while (y > 0) {
+		std::cout << x << "\t" << y << "\n";
+		y -= 2020;
+		x += 2021;
+		std::cout << x * 2020 + y * 2021 << "\n";
 	}
 	return 0;
 }
