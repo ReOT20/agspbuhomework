@@ -14,7 +14,7 @@ long* chen(long n) {
 	while (i <= long(sqrt(n)) + 1) {
 		long j = i + i + 2;
 		while (j < n + 2) {
-			if (arr[j - 1] == 0) arr[j - 1] = i + 1;
+			arr[j - 1] = i + 1;
 			j += i + 1;
 		}
 		i += 1;
