@@ -1,9 +1,9 @@
 ﻿#include <iostream>
 
-int merge(int*& arr, int a, int b) {
+int merg(int* &arr, int a, int b) {
 	if (b - a > 1) {
-		merge(arr, a, (a + b) / 2);
-		merge(arr, (a + b) / 2, b);
+		merg(arr, a, (a + b) / 2);
+		merg(arr, (a + b) / 2, b);
 	}
 	else return 0;
 	int* res = new int[b - a];
@@ -47,7 +47,7 @@ int main() {
 		std::cin >> arr[i];
 		i++;
 	}
-	merge(arr, 0, n);
+	merg(arr, 0, n);
 	i = 0;
 	while (i < n) {
 		std::cout << arr[i] << ' ';
