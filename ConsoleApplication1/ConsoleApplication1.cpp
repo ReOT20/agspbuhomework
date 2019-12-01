@@ -1,60 +1,67 @@
 ﻿#include <iostream>
 
-bool ecual(char* arr, char* b, int l) {
+int* cut(int* arr, int a, int b) {
+	int* res = new int[b - a];
 	int i = 0;
-	while (i < l) {
-		if (arr[i] != b[i]) {
-			return false;
-		}
+	while (i + a < b) {
+		res[i] = arr[a + i];
 		i++;
 	}
-	return true;
+	return res;
 }
 
-int main() {
-	int l;
-	std::cin >> l;
-	char* arr = new char[l];
-	char buff;
+int merge(int* &arr, int a, int b) {
+	if (b - a > 1) {
+		merge(arr, a, (a + b) / 2);
+		merge(arr, (a + b) / 2, b);
+	}
+	else return 0;
+	int* res = new int[b-a];
 	int i = 0;
-	while (i < l) {
+	int j = 0;
+	while (i + j < a + b) {
+		if (i + a < (a + b) / 2 && j + (a + b)/2 < b) {
+			if (arr[i + a] < arr[j + (a + b)/2]) {
+				res[i + j] = arr[i + a];
+				i++;
+			}
+			else {
+				res[i + j] = arr[j + (a + b) / 2];
+				j++;
+			}
+		}
+		else if (i + a < (a + b) / 2) {
+			res[i + j] = arr[i + a];
+			i++;
+		}
+		else {
+			res[i + j] = arr[j + (a + b) / 2];
+			j++;
+		}
+	}
+	i = a;
+	while (i < b) {
+		arr[i] = res[i - a];
+		i++;
+	}
+	return 0;
+}
+
+
+int main() {
+	int n;
+	std::cin >> n;
+	int i = 0;
+	int* arr = new int[n];
+	while (i < n) {
 		std::cin >> arr[i];
 		i++;
 	}
-	char* b = new char[l];
-	b = arr;
-	int check = 0;
-	while (ecual(arr, b, l) == false || check == 0) {
-		for (int i = l - 1; i > 0; i--) {
-			if (b[i - 1] < b[i]) {
-				int t = i;
-				for (int j = t; j < l; j++) {
-					if (int(b[j]) <= int(b[t]) && int(b[i - 1]) < int(b[j])) {
-						t = j;
-					}
-				}
-				buff = b[i - 1];
-				b[i - 1] = b[t];
-				b[t] = buff;
-
-				for (int j = l - 1; i < j; i++, j--) {
-					buff = b[i];
-					b[i] = b[j];
-					b[j] = buff;
-				}
-				break;
-			}
-		}
-		check = 1;
-		if (true) {
-			i = 0;
-			while (i < l) {
-				std::cout << b[i] << ' ';
-				i++;
-			}
-			std::cout << ' ' << ecual(arr, b, l) << '\n';
-
-		}
+	merge(arr, 0, n);
+	i = 0;
+	while (i < n) {
+		std::cout << arr[0] << ' ';
+		i++;
 	}
 	return 0;
 }
