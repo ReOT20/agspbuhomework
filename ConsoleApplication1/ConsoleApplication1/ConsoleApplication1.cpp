@@ -9,8 +9,8 @@ int merg(int* &arr, int a, int b) {
 	int* res = new int[b - a];
 	int i = 0;
 	int j = 0;
-	while (i + j < a + b) {
-		if (i + a < (a + b) / 2 && j + (a + b) / 2 < b) {
+	while (i + j < b - a) {
+		if ((i + a) < ((a + b) / 2) && (j + ((a + b) / 2)) < b) {
 			if (arr[i + a] < arr[j + (a + b) / 2]) {
 				res[i + j] = arr[i + a];
 				i++;
