@@ -1,12 +1,14 @@
 {
   "ExpandedNodes": [
     "",
+    "\\01.02.2020.HW",
     "\\23.11.2019.HW",
+    "\\7.12.2019.HW",
     "\\ConsoleApplication1",
     "\\ConsoleApplication1\\ConsoleApplication1",
     "\\Homework_autumn_hollidays_2019",
     "\\samples"
   ],
-  "SelectedNode": "\\samples\\merge.cpp",
+  "SelectedNode": "\\ConsoleApplication1\\ConsoleApplication1\\ConsoleApplication1.cpp",
   "PreviewInSolutionExplorer": false
 }

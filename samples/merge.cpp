@@ -11,13 +11,13 @@ int merg(int*& arr, int a, int b) {
 	int j = 0;
 	while (i + j < b - a) {
 		if ((i + a) < ((a + b) / 2) && (j + ((a + b) / 2)) < b) {
-			if (arr[i + a] < arr[j + (a + b) / 2]) {
-				res[i + j] = arr[i + a];
-				i++;
-			}
-			else {
+			if (arr[i + a] > arr[j + (a + b) / 2]) {
 				res[i + j] = arr[j + (a + b) / 2];
 				j++;
+			}
+			else {
+				res[i + j] = arr[i + a];
+				i++;
 			}
 		}
 		else if (i + a < (a + b) / 2) {

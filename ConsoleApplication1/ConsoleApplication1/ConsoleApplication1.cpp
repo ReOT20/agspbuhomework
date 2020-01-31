@@ -1,57 +1,66 @@
 ﻿#include <iostream>
+using namespace std;
 
-int merg(int* &arr, int a, int b) {
-	if (b - a > 1) {
-		merg(arr, a, (a + b) / 2);
-		merg(arr, (a + b) / 2, b);
+
+struct Array {
+	int size = 0;
+	int* data;
+	
+	Array() {}
+
+	Array(int x) {
+		size = x;
+		data = new int[size];
 	}
-	else return 0;
-	int* res = new int[b - a];
-	int i = 0;
-	int j = 0;
-	while (i + j < b - a) {
-		if ((i + a) < ((a + b) / 2) && (j + ((a + b) / 2)) < b) {
-			if (arr[i + a] < arr[j + (a + b) / 2]) {
-				res[i + j] = arr[i + a];
-				i++;
+
+	Array(const Array& A) {
+		if (size != A.size && data != A.data) {
+			size = A.size;
+			data = new int[size];
+			for (int i = 0; i < size; i++) {
+				data[i] = A.data[i];
 			}
-			else {
-				res[i + j] = arr[j + (a + b) / 2];
-				j++;
+		}
+	}
+
+	~Array() {
+		delete[] data;
+	}
+
+	int& operator[] (int i) {
+		if (i < 0 || i >= size) {
+			std::cout << "Err";
+			return data[0];
+		}
+		return data[i];
+	}
+
+	int& Size() {
+		return size;
+	}
+
+	Array& operator= (Array& b) {
+		if (size != b.size) {
+			if (size != 0) {
+				delete[] data;
+				int* data;
 			}
+			size = b.size;
+			data = new int[size];
 		}
-		else if (i + a < (a + b) / 2) {
-			res[i + j] = arr[i + a];
-			i++;
+		for (int i = 0; i < size; i++) {
+			data[i] = b.data[i];
 		}
-		else {
-			res[i + j] = arr[j + (a + b) / 2];
-			j++;
-		}
+		return *this;
 	}
-	i = a;
-	while (i < b) {
-		arr[i] = res[i - a];
-		i++;
-	}
-	return 0;
-}
+};
 
 
 int main() {
-	int n;
-	std::cin >> n;
-	int i = 0;
-	int* arr = new int[n];
-	while (i < n) {
-		std::cin >> arr[i];
-		i++;
-	}
-	merg(arr, 0, n);
-	i = 0;
-	while (i < n) {
-		std::cout << arr[i] << ' ';
-		i++;
-	}
+	Array a(1);
+	a[0] = 2;
+	Array b(4);
+	b = a;
+	cout << (a[0] == b[0] && a.Size() == b.Size());
 	return 0;
 }
