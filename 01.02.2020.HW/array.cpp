@@ -1,18 +1,18 @@
 #include <iostream>
 using namespace std;
-
-
+ 
+ 
 struct Array {
 	int size = 0;
 	int* data;
-
+ 
 	Array() {}
-
+ 
 	Array(int x) {
 		size = x;
 		data = new int[size];
 	}
-
+ 
 	Array(const Array& A) {
 		if (size != A.size && data != A.data) {
 			size = A.size;
@@ -22,11 +22,11 @@ struct Array {
 			}
 		}
 	}
-
+ 
 	~Array() {
 		delete[] data;
 	}
-
+ 
 	int& operator[] (int i) {
 		if (i < 0 || i >= size) {
 			std::cout << "Err";
@@ -34,11 +34,11 @@ struct Array {
 		}
 		return data[i];
 	}
-
+ 
 	int& Size() {
 		return size;
 	}
-
+ 
 	Array& operator= (const Array& b) {
 		if (size != b.size) {
 			if (size != 0) {
@@ -54,21 +54,21 @@ struct Array {
 		return *this;
 	}
 };
-
-
+ 
+ 
 struct Vector {
 	int size = 0;
 	int* data;
 	int capacity = 0;
-
+ 
 	Vector() {}
-
+ 
 	Vector(int x) {
 		size = x;
 		capacity = size * 2;
 		data = new int[capacity];
 	}
-
+ 
 	Vector(const Vector& A) {
 		size = A.size;
 		capacity = A.capacity;
@@ -77,11 +77,11 @@ struct Vector {
 			data[i] = A.data[i];
 		}
 	}
-
+ 
 	~Vector() {
 		delete[] data;
 	}
-
+ 
 	int& operator[] (int i) {
 		if (i < 0 || i >= size) {
 			std::cout << "Err";
@@ -89,15 +89,15 @@ struct Vector {
 		}
 		return data[i];
 	}
-
+ 
 	int& Size() {
 		return size;
 	}
-
+ 
 	int& Capacity() {
 		return capacity;
 	}
-
+ 
 	Vector& operator= (const Vector& b) {
 		if (capacity != b.capacity) {
 			if (capacity != 0) {
@@ -113,7 +113,7 @@ struct Vector {
 		}
 		return *this;
 	}
-
+ 
 	void push_back(int x) {
 		if (size == capacity) {
 			if (capacity == 0) {
@@ -131,9 +131,26 @@ struct Vector {
 		data[size] = x;
 		size++;
 	}
+	
+	void resize(int x) {
+		int* temp = new int[x];
+		for(int i = 0; i < size && i < x; i++) {
+			temp[i] = data[i];
+		}
+		if (capacity != 0) {
+			delete[] data;
+		}
+		capacity = x;
+		data = temp;
+		if (size < capacity) {
+			size = capacity;
+		}
+	}
 };
-
-
+ 
+ 
 int main() {
+	Vector a;
+	a.resize(0);
 	return 0;
 }
