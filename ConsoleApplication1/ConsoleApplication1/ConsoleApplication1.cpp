@@ -1,139 +1,101 @@
 ﻿#include <iostream>
+#include <string>
 using namespace std;
 
 
-struct Array {
-	int size = 0;
-	int* data;
-
-	Array() {}
-
-	Array(int x) {
-		size = x;
-		data = new int[size];
-	}
-
-	Array(const Array& A) {
-		if (size != A.size && data != A.data) {
-			size = A.size;
-			data = new int[size];
-			for (int i = 0; i < size; i++) {
-				data[i] = A.data[i];
-			}
-		}
-	}
-
-	~Array() {
-		delete[] data;
-	}
-
-	int& operator[] (int i) {
-		if (i < 0 || i >= size) {
-			std::cout << "Err";
-			return data[0];
-		}
-		return data[i];
-	}
-
-	int& Size() {
-		return size;
-	}
-
-	Array& operator= (const Array& b) {
-		if (size != b.size) {
-			if (size != 0) {
-				delete[] data;
-				int* data;
-			}
-			size = b.size;
-			data = new int[size];
-		}
-		for (int i = 0; i < size; i++) {
-			data[i] = b.data[i];
-		}
-		return *this;
-	}
+struct Node {
+	char data;
+	Node* next = NULL;
 };
 
 
-struct Vector {
-	int size = 0;
-	int* data;
-	int capacity = 0;
+struct Stack {
+	Node* head = NULL;
 
-	Vector() {}
+	Stack() {}
 
-	Vector(int x) {
-		size = x;
-		capacity = size * 2;
-		data = new int[capacity];
+	Stack(char x) {
+		head = new Node;
+		head->data = x;
 	}
 
-	Vector(const Vector& A) {
-		size = A.size;
-		capacity = A.capacity;
-		data = new int[capacity];
-		for (int i = 0; i < size; i++) {
-			data[i] = A.data[i];
+	void push(int a) {
+		if (head == NULL) {
+			head = new Node;
+			head->data = a;
+			return;
 		}
+		Node* temp = new Node;
+		temp->data = a;
+		temp->next = head;
+		head = temp;
 	}
 
-	~Vector() {
-		delete[] data;
+	char pop() {
+		Node* temp = head;
+		head = head->next;
+		int a = temp->data;
+		delete temp;
+		return a;
 	}
-
-	int& operator[] (int i) {
-		if (i < 0 || i >= size) {
-			std::cout << "Err";
-			return data[0];
+	~Stack() {
+		while (head != NULL) {
+			Node* temp = head;
+			head = head->next;
+			delete temp;
 		}
-		return data[i];
-	}
-
-	int& Size() {
-		return size;
-	}
-
-	int& Capacity() {
-		return capacity;
-	}
-
-	Vector& operator= (const Vector& b) {
-		if (capacity != b.capacity) {
-			if (capacity != 0) {
-				delete[] data;
-				int* data;
-			}
-			size = b.size;
-			capacity = b.capacity;
-			data = new int[capacity];
-		}
-		for (int i = 0; i < size; i++) {
-			data[i] = b.data[i];
-		}
-		return *this;
-	}
-
-	void push_back(int x) {
-		if (size == capacity) {
-			if (capacity == 0) {
-				capacity = 1;
-			}
-			capacity *= 2;
-			int* temp = new int[capacity];
-			for (int i = 0; i < size; i++) {
-				temp[i] = data[i];
-			}
-			if (size != 0)
-				delete[] data;
-			data = temp;
-		}
-		data[size] = x;
-		size++;
 	}
 };
 
 
 int main() {
+	Stack st;
+	string input;
+	cin >> input;
+	int n = input.length();
+	for (int i = 0; i < n; i++) {
+		st.push(input[i]);
+	}
+	int parentheses_bracket_1 = 0;
+	int parentheses_bracket_2 = 0;
+	int square_bracket_1 = 0;
+	int square_bracket_2 = 0;
+	int curly_bracket_1 = 0;
+	int curly_bracket_2 = 0;
+	int angle_bracket_1 = 0;
+	int angle_bracket_2 = 0;
+	int i = 0;
+	bool check = true;
+	char temp;
+	while (i < n && check) {
+		temp = st.pop();
+		if (temp == ')')
+			parentheses_bracket_1 += 1;
+		else if (temp == '(')
+			parentheses_bracket_2 += 1;
+		else if (temp == ']')
+			square_bracket_1 += 1;
+		else if (temp == '[')
+			square_bracket_2 += 1;
+		else if (temp == '}')
+			curly_bracket_1 += 1;
+		else if (temp == '{')
+			curly_bracket_2 += 1;
+		else if (temp == '>')
+			angle_bracket_1 += 1;
+		else if (temp == '<')
+			angle_bracket_2 += 1;
+		if (parentheses_bracket_2 > parentheses_bracket_1 || 
+			square_bracket_2 > square_bracket_1 || 
+			curly_bracket_2 > curly_bracket_1 || 
+			angle_bracket_2 > angle_bracket_1)
+			check = false;
+		else
+			i += 1;
+	}
+	if (i == n)
+		cout << "Right!";
+	else
+		cout << "Wrong!";
 	return 0;
 }
