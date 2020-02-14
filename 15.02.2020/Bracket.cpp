@@ -4,7 +4,7 @@ using namespace std;
 
 
 struct Node {
-	char data;
+	int data;
 	Node* next = NULL;
 };
 
@@ -14,9 +14,17 @@ struct Stack {
 
 	Stack() {}
 
-	Stack(char x) {
+	Stack(int x) {
 		head = new Node;
 		head->data = x;
+	}
+
+	~Stack() {
+		while (head != NULL) {
+			Node* temp = head;
+			head = head->next;
+			delete temp;
+		}
 	}
 
 	void push(int a) {
@@ -31,18 +39,20 @@ struct Stack {
 		head = temp;
 	}
 
-	char pop() {
+	int pop() {
 		Node* temp = head;
 		head = head->next;
 		int a = temp->data;
 		delete temp;
 		return a;
 	}
-	~Stack() {
-		while (head != NULL) {
+
+	void multipop(int k) {
+		while ((head != NULL) && (k != 0)) {
 			Node* temp = head;
 			head = head->next;
 			delete temp;
+			k--;
 		}
 	}
 };

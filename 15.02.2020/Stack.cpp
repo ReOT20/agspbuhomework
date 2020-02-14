@@ -18,6 +18,14 @@ struct Stack {
 		head->data = x;
 	}
 
+	~Stack() {
+		while (head != NULL) {
+			Node* temp = head;
+			head = head->next;
+			delete temp;
+		}
+	}
+
 	void push(int a) {
 		if (head == NULL) {
 			head = new Node;
@@ -37,19 +45,18 @@ struct Stack {
 		delete temp;
 		return a;
 	}
-	~Stack() {
-		while (head != NULL) {
+
+	void multipop(int k) {
+		while ((head != NULL) && (k != 0)) {
 			Node* temp = head;
 			head = head->next;
 			delete temp;
+			k--;
 		}
 	}
 };
 
 
 int main() {
-	Stack a;
-	a.push(13);
-	std::cout << a.pop();
 	return 0;
 }
