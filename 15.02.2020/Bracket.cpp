@@ -103,7 +103,11 @@ int main() {
 		else
 			i += 1;
 	}
-	if (i == n)
+	if (i == n &&
+		parentheses_bracket_2 == parentheses_bracket_1 &&
+		square_bracket_2 == square_bracket_1 &&
+		curly_bracket_2 == curly_bracket_1 &&
+		angle_bracket_2 == angle_bracket_1)
 		cout << "Right!";
 	else
 		cout << "Wrong!";
