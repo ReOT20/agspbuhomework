@@ -14,8 +14,8 @@ int main() {
 	cout << "Enter 2 words\n";
 	string a, b;
 	cin >> b >> a;
-	b = '´' + b;
-	a = '´' + a;
+	b = b;
+	a = a;
 	int dc, inc, rc;
 	cout << "Enter delete cost\n";
 	cin >> dc;

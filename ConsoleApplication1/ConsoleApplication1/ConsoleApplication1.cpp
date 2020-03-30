@@ -13,9 +13,8 @@ int min(int a, int b, int c) {
 int main() {
 	cout << "Enter 2 words\n";
 	string a, b;
-	cin >> b >> a;
-	b = 'ґ' + b;
-	a = 'ґ' + a;
+	a = "Eh bien, mon prince. Gênes et Lucques ne sont plus que des apanages, des поместья, de la famille Buonaparte";
+	b = "Non, je vous préviens que si vous ne me dites pas que nous avons la guerre, si vous vous permettez encore de pallier toutes les infamies, toutes les atrocités de cet Antichrist (ma parole, j'y crois) — je ne vous connais plus, vous n'êtes plus mon ami, vous n'êtes plus мой верный раб, comme vous dites";
 	int dc, inc, rc;
 	cout << "Enter delete cost\n";
 	cin >> dc;
