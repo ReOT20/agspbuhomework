@@ -3,12 +3,19 @@
 using namespace std;
 
 
+int min(int a, int b, int c) {
+	if (a < b and a < c) return a;
+	if (b < c) return b;
+	return c;
+}
+
+
 int main() {
 	cout << "Enter 2 words\n";
 	string a, b;
 	cin >> b >> a;
-	b = ' ' + b;
-	a = ' ' + a;
+	b = 'ґ' + b;
+	a = 'ґ' + a;
 	int dc, inc, rc;
 	cout << "Enter delete cost\n";
 	cin >> dc;
@@ -16,36 +23,22 @@ int main() {
 	cin >> inc;
 	cout << "Enter replace cost\n";
 	cin >> rc;
-	int d1, d2, d3;
 	int** arr = new int* [a.length()];
 	for (int i = 0; i < a.length(); i++) {
 		arr[i] = new int[b.length()];
-		for (int j = 0; j < b.length(); j++) {
-			if (i == 0 and j == 0) {
-				arr[i][j] = 0;
-			}
-			else if (j == 0 and i > 0) {
-				arr[i][j] = i * dc;
-			}
-			else if (i == 0 and j > 0) {
-				arr[i][j] = j * dc;
-			}
-			else if (a[i] == b[j]) {
-				arr[i][j] = arr[i - 1][j - 1];
+	}
+	arr[0][0] = 0;
+	for (int j = 1; j < b.length(); j++) {
+		arr[0][j] = arr[0][j - 1] + inc;
+	}
+	for (int i = 1; i < a.length(); i++) {
+		arr[i][0] = arr[i - 1][0] + dc;
+		for (int j = 1; j < b.length(); j++) {
+			if (a[i] != b[j]) {
+				arr[i][j] = min(arr[i - 1][j] + dc, arr[i][j - 1] + inc, arr[i - 1][j - 1] + rc);
 			}
 			else {
-				d1 = arr[i][j - 1] + inc;
-				d2 = arr[i - 1][j] + dc;
-				d3 = arr[i - 1][j - 1] + rc;
-				if (d1 < d2 and d1 < d3) {
-					arr[i][j] = d1;
-				}
-				else if (d2 < d1 and d2 < d3) {
-					arr[i][j] = d2;
-				}
-				else {
-					arr[i][j] = d3;
-				}
+				arr[i][j] = arr[i - 1][j - 1];
 			}
 		}
 	}
