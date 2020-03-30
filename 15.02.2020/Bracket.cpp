@@ -77,23 +77,32 @@ int main() {
 	int i = 0;
 	bool check = true;
 	char temp;
+	char old = '-';
 	while (i < n && check) {
 		temp = st.pop();
 		if (temp == ')')
+			if (temp != old) check = false;
 			parentheses_bracket_1 += 1;
 		else if (temp == '(')
+			old = temp;
 			parentheses_bracket_2 += 1;
 		else if (temp == ']')
+			if (temp != old) check = false;
 			square_bracket_1 += 1;
 		else if (temp == '[')
+			old = temp;
 			square_bracket_2 += 1;
 		else if (temp == '}')
+			if (temp != old) check = false;
 			curly_bracket_1 += 1;
 		else if (temp == '{')
+			old = temp;
 			curly_bracket_2 += 1;
 		else if (temp == '>')
+			if (temp != old) check = false;
 			angle_bracket_1 += 1;
 		else if (temp == '<')
+			old = temp;
 			angle_bracket_2 += 1;
 		if (parentheses_bracket_2 > parentheses_bracket_1 ||
 			square_bracket_2 > square_bracket_1 ||
